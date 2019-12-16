@@ -61,47 +61,117 @@
         <div class="column_pannel" id="column_show"></div>
     </div>
 
+    <!-- js 代码实现功能 4 5 6  -->
     <script>
+        user.gettotal({
+            success: function (res) {
+                $('.scolor00').find('em').html(res.data.all_count)
+                $('.scolor01').find('em').html(res.data.day_count)
+            },
+            fail: function (res) {
+                alert('重试!')
+            }
+        });
+        user.getcomment({
+            success: function (res) {
+                $('.scolor02').find('em').html(res.data.all_count)
+                $('.scolor03').find('em').html(res.data.day_count)
+            },
+            fail: function (res) {
+                alert('重试!')
+            }
+        })
+
+
+
+
+
+
+    </script>
+    <script>
+
         var oChart = echarts.init(document.getElementById('curve_show'));
         var aList_all = [
-            { 'count': 36, 'date': '2019-04-13' },
-            { 'count': 52, 'date': '2019-04-14' },
-            { 'count': 78, 'date': '2019-04-15' },
-            { 'count': 85, 'date': '2019-04-16' },
-            { 'count': 65, 'date': '2019-04-17' },
-            { 'count': 72, 'date': '2019-04-18' },
-            { 'count': 88, 'date': '2019-04-19' },
-            { 'count': 64, 'date': '2019-04-20' },
-            { 'count': 72, 'date': '2019-04-21' },
-            { 'count': 90, 'date': '2019-04-22' },
-            { 'count': 96, 'date': '2019-04-23' },
-            { 'count': 100, 'date': '2019-04-24' },
-            { 'count': 102, 'date': '2019-04-25' },
-            { 'count': 110, 'date': '2019-04-26' },
-            { 'count': 123, 'date': '2019-04-27' },
-            { 'count': 100, 'date': '2019-04-28' },
-            { 'count': 132, 'date': '2019-04-29' },
-            { 'count': 146, 'date': '2019-04-30' },
-            { 'count': 200, 'date': '2019-05-01' },
-            { 'count': 180, 'date': '2019-05-02' },
-            { 'count': 163, 'date': '2019-05-03' },
-            { 'count': 110, 'date': '2019-05-04' },
-            { 'count': 80, 'date': '2019-05-05' },
-            { 'count': 82, 'date': '2019-05-06' },
-            { 'count': 70, 'date': '2019-05-07' },
-            { 'count': 65, 'date': '2019-05-08' },
-            { 'count': 54, 'date': '2019-05-09' },
-            { 'count': 40, 'date': '2019-05-10' },
-            { 'count': 45, 'date': '2019-05-11' },
-            { 'count': 38, 'date': '2019-05-12' },
+            // { 'count': 36, 'date': '2019-04-13' },
+            // { 'count': 52, 'date': '2019-04-14' },
+            // { 'count': 78, 'date': '2019-04-15' },
+            // { 'count': 85, 'date': '2019-04-16' },
+            // { 'count': 65, 'date': '2019-04-17' },
+            // { 'count': 72, 'date': '2019-04-18' },
+            // { 'count': 88, 'date': '2019-04-19' },
+            // { 'count': 64, 'date': '2019-04-20' },
+            // { 'count': 72, 'date': '2019-04-21' },
+            // { 'count': 90, 'date': '2019-04-22' },
+            // { 'count': 96, 'date': '2019-04-23' },
+            // { 'count': 100, 'date': '2019-04-24' },
+            // { 'count': 102, 'date': '2019-04-25' },
+            // { 'count': 110, 'date': '2019-04-26' },
+            // { 'count': 123, 'date': '2019-04-27' },
+            // { 'count': 100, 'date': '2019-04-28' },
+            // { 'count': 132, 'date': '2019-04-29' },
+            // { 'count': 146, 'date': '2019-04-30' },
+            // { 'count': 200, 'date': '2019-05-01' },
+            // { 'count': 180, 'date': '2019-05-02' },
+            // { 'count': 163, 'date': '2019-05-03' },
+            // { 'count': 110, 'date': '2019-05-04' },
+            // { 'count': 80, 'date': '2019-05-05' },
+            // { 'count': 82, 'date': '2019-05-06' },
+            // { 'count': 70, 'date': '2019-05-07' },
+            // { 'count': 65, 'date': '2019-05-08' },
+            // { 'count': 54, 'date': '2019-05-09' },
+            // { 'count': 40, 'date': '2019-05-10' },
+            // { 'count': 45, 'date': '2019-05-11' },
+            // { 'count': 38, 'date': '2019-05-12' },
         ];
+        //获取月新增文章数, 展示到页面曲线图 
+        //功能实现失败
+
+        $.ajax({
+            type: 'get',
+            url: 'http://localhost:8000/admin/month_article_count',
+            async: false,
+            success: function (res) {
+                // console.log(res);
+                // console.log(res.data[2].day_count);
+                // console.log(res.data[2].day);
+                // aList_all[2].count = res.data[2].day_count; 
+                // console.log(aList_all[2].date);
+                // console.log(aList_all[2].count);
+                for (var i = 0; i < res.data.length; i++) {
+                    aList_all.push(res.data[i])
+
+                }
+                // if (res.code === 200) {
+                //     for (var i = 0; i < res.data.length; i++) {
+                //         res.data[i].index = i;
+                //         var index = res.data[i].index;
+                //         console.log(index);
+
+                //         aList_all[index].count = res.data[index].day_count;
+                //         aList_all[index].date = res.data[index].day;
+
+
+
+                //     }
+                // }
+
+
+            }
+
+        })
+        // console.log(aList_all[i]);
+        // console.log(aList_all);
+
+        // console.log(aList_all[2].date);
+        // console.log(aList_all[2].count);
+
 
         let aCount = [];
         let aDate = [];
 
         for (var i = 0; i < aList_all.length; i++) {
-            aCount.push(aList_all[i].count);
-            aDate.push(aList_all[i].date);
+            aCount.push(aList_all[i].day_count);
+            aDate.push(aList_all[i].day);
         }
 
         var chartopt = {
@@ -349,43 +419,6 @@
 
 
 </body>
-<script>
-    user.gettotal({
-        success: function (res) {
-            $('.scolor00').find('em').html(res.data.all_count)
-            $('.scolor01').find('em').html(res.data.day_count)
-        },
-        fail: function (res) {
-            alert('重试!')
-        }
-    });
-    user.getcomment({
-        success: function (res) {
-            $('.scolor02').find('em').html(res.data.all_count)
-            $('.scolor03').find('em').html(res.data.day_count)
-        },
-        fail: function (res) {
-            alert('重试!')
-        }
-    })
-    $.ajax({
-        type: 'get',
-        url: 'http://localhost:8000/admin/month_article_count',
-        success: function (res) {
-            console.log(res);
-            if (res === 200) {
-                for (var i = 0; i < res.data.length; i++) {
 
-                    aList_all[i].count = data[i].day_count;
-                    aList_all[i].date = data[i].day;
-                }
-            }
-
-
-        }
-    })
-
-
-</script>
 
 </html>
