@@ -42,7 +42,7 @@ var user = {
             url: GETUSER,
             success: function (res) {
                 console.log(res);
-                date = res.data
+                // date = res.data
                 if (res.code === 200) {
                     options.success(res);
                 } else {
