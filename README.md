@@ -39,3 +39,5 @@
 ​        <strong> ajax 获取是异步进程,数据可以成功获取,但是在同步进程之后,不会渲染在页面里,,,,所以 通过  async: false  将异步 设置为  false, 利用数组.push(),将获取回来的数据 放到aList-all 里,进行页面渲染!!!</strong>
 
 (github clone 失败问题 ssh 问题)
+
+(over)
