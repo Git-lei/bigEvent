@@ -19,8 +19,8 @@
     <div class="sider">
         <a href="#" class="logo"><img src="images/logo02.png" alt="logo"></a>
         <div class="user_info">
-            <img src="images/2.jpg" alt="person">
-            <span>欢迎&nbsp;&nbsp;李思思</span>
+            <img src="images/2.jpg" alt="person" class="user_pic">
+            <span class="nickname">欢迎&nbsp;&nbsp;李思思</span>
             <b>管理员</b>
         </div>
         <div class="menu">
@@ -51,7 +51,7 @@
         </form>
         <div class="user_center_link">
             <a href="user.html" onclick="setMenu(3,0)" target="main_frame">个人中心</a>
-            <img src="images/2.jpg" alt="person">
+            <img src="images/2.jpg" alt="person" class="user_pic">
             <a href="#" class="logout"><i class="iconfont icon-tuichu"></i> 退出</a>
         </div>
     </div>
@@ -132,6 +132,18 @@
 
     })
 
+    //1.获取 用户头像 昵称
+    //2.从 服务器获取 修改
+
+    user.getUser({
+        success: function (res) {
+            $('.nickname').html('欢迎' + ' ' + ' ' + res.data.nickname);
+            $('.user_pic').attr("src", res.data.user_pic)
+        },
+        fail: function () {
+            alert('重试!')
+        }
+    })
 
 
 
