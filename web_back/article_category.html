@@ -140,7 +140,7 @@
 </body>
 
 <script id="category" type="text/template">
-{{each data val}}
+{{each $data val}}
     <tr>
         <td>{{val.name}}</td>
         <td>{{val.slug}}</td>
@@ -166,7 +166,7 @@
     //1. 数据获取
     user.category({
         success: function (res) {
-            var htmlStr = template('category', res);
+            var htmlStr = template('category', res.data);
             $('#tbody').html(htmlStr);
 
         }
@@ -178,6 +178,7 @@
     $('#modal_add').click(function () {
         if ($("#recipient-name").val().trim() === '' || $("#recipient-slug").val().trim() === '') {
             alert("请填写内容!")
+            return;
         }
 
         //发送 生成
