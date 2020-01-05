@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
+    <script src="./js/axios.js"></script>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="../web_back/js/template-web.js"></script>
 </head>
 
 <body>
@@ -28,23 +31,23 @@
         <div class="menu">
             <div class="menu_collapse fl">
                 <a href="javascript:;" class="level_one"><i class="fa fa-list-ul"></i>全部分类</a>
-                <ul class="level_two">
-                    <li class="up"></li>
+                <ul class="level_two" id="top_nav">
+                    <!-- <li class="up"></li>
                     <li><a href="#">最 新</a></li>
                     <li><a href="#">科 技</a></li>
                     <li><a href="#">股 市</a></li>
                     <li><a href="#">商 品</a></li>
                     <li><a href="#">外 汇</a></li>
-                    <li><a href="#">公 司</a></li>
+                    <li><a href="#">公 司</a></li> -->
                 </ul>
             </div>
-            <ul class="left_menu fl">
-                <li><a href="#">最 新</a></li>
+            <ul class="left_menu fl" id="top_nav02">
+                <!-- <li><a href="#">最 新</a></li>
                 <li><a href="#">科 技</a></li>
                 <li><a href="#">股 市</a></li>
                 <li><a href="#">商 品</a></li>
                 <li><a href="#">外 汇</a></li>
-                <li><a href="#">公 司</a></li>
+                <li><a href="#">公 司</a></li> -->
             </ul>
             <ul class="right_menu fr">
                 <li><a href="#">科技专题</a></li>
@@ -55,8 +58,8 @@
 
     <div class="main_con clearfix">
         <div class="left_con">
-            <ul class="focus_list">
-                <li class="first">
+            <ul class="focus_list" id="list">
+                <!-- <li class="first">
                     <a href="#"><img src="images/pic01.jpg" alt=""></a>
                     <p>图片说明</p>
                 </li>
@@ -75,7 +78,7 @@
                 <li>
                     <a href="#"><img src="images/pic06.jpg" alt=""></a>
                     <p>图片说明</p>
-                </li>
+                </li> -->
             </ul>
 
             <div class="common_title">
@@ -215,12 +218,74 @@
             <span>|</span>
             <a href="#">招聘人才</a>
             <span>|</span>
-            <a href="#">友情链接</a>		
+            <a href="#">友情链接</a>
         </div>
-        <p>CopyRight © 2019 深圳大事件信息技术股份有限公司   All Rights Reserved</p>
-        <p>电话：0755-****888    粤ICP备*******8号</p>
+        <p>CopyRight © 2019 深圳大事件信息技术股份有限公司 All Rights Reserved</p>
+        <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
 
 </body>
+<script src="../web_back/js/template-web.js"></script>
+<script type="text/template" id="article">
+{{each data val i}}
+<li {{if i===0}} class="first" {{/if}}>
+    <a href="#"><img src="{{val.cover}}" alt=""></a>
+    <p>{{val.title}}</p>
+</li>
+{{/each}}
+
+
+</script>
+<script type="text/template" id='category'>
+{{each data val}}
+<li><a href="./list.html?id={{val.id}}">{{val.name}}</a></li>
+
+{{/each}}
+
+
+
+</script>
+<script>
+    //1. 首页顶部 文章信息展示
+    //      请求 文章数据 
+    //      axios 第一个参数.是地址
+    //          第二个参数是parms :{数据}
+    axios.get('http://localhost:8000/admin/search', {
+        params: {
+            perpage: 5,
+        }
+    })
+        .then(function (res) {
+            res = res.data;
+            if (res.code === 200) {
+                var htmlStr = template('article', res)
+                // document.getElementById("list").innerHTML = htmlStr;
+                $('#list').html(htmlStr);
+            }
+        })
+
+
+
+    // 2. 设置顶部导航 展示
+    axios({
+        method: 'get',
+        url: 'http://localhost:8000/admin/category_search'
+    })
+        .then(function (res) {
+            var res = res.data;
+            console.log(res);
+
+            if (res.code === 200) {
+                $('#top_nav').html(template('category', res));
+                $('#top_nav02').html(template('category', res));
+
+                //
+            }
+
+        })
+
+
+        //3.
+</script>
 
 </html>
